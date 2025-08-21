@@ -37,9 +37,9 @@ async function run() {
     });
 
     // -------get data for 6 active gardeners for Home Page---------
-    app.get("/gardeners", async(req, res)=>{
-      const activeGardeners = await gardenCollection.find({status :"active"}).limit(6).toArray();
-      res.send(activeGardeners);
+    app.get("/users", async(req, res)=>{
+      const activeUsers = await usersCollection.find({status :"Active"}).limit(6).toArray();
+      res.send(activeUsers);
     })
     // for an specific id (Tips Details)-------------
 
