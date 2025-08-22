@@ -35,17 +35,26 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    // -----------get data for navbar name----------
+    app.get("/users/:uid", async (req, res) => {
+      const uid = req.params.uid;
+      const user = await usersCollection.findOne({ uid }); // assuming 'uid' is stored in DB
+      res.send(user);
+    });
     // ------Get data from user for 6 top trading tips show in home page----
-    app.get("/gardens/description", async(req, res)=>{
+    app.get("/gardens/description", async (req, res) => {
       const tradingTips = await gardenCollection.find().limit(6).toArray();
       res.send(tradingTips);
-    })
+    });
 
-    // -------get data for 6 active gardeners for Home Page---------
-    app.get("/users/active", async(req, res)=>{
-      const activeUsers = await usersCollection.find({status :"Active"}).limit(6).toArray();
+    // -------get data for feature 6 active gardeners for Home Page---------
+    app.get("/users/status", async (req, res) => {
+      const activeUsers = await usersCollection
+        .find({ status: "Active" })
+        .limit(6)
+        .toArray();
       res.send(activeUsers);
-    })
+    });
     // for an specific id (Tips Details)-------------
 
     app.get("/garden/:id", async (req, res) => {
@@ -119,7 +128,6 @@ async function run() {
       res.send(result);
     });
 
-     
     // --------------deleting Tips from Browser-----------
 
     app.delete("/gardens/:id", async (req, res) => {
