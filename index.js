@@ -35,6 +35,11 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    // ------Get data from user for 6 top trading tips show in home page----
+    app.get("/gardens/description", async(req, res)=>{
+      const tradingTips = await gardenCollection.find().limit(6).toArray();
+      res.send(tradingTips);
+    })
 
     // -------get data for 6 active gardeners for Home Page---------
     app.get("/users/active", async(req, res)=>{
@@ -114,6 +119,7 @@ async function run() {
       res.send(result);
     });
 
+     
     // --------------deleting Tips from Browser-----------
 
     app.delete("/gardens/:id", async (req, res) => {
