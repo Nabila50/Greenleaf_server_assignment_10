@@ -38,7 +38,8 @@ async function run() {
     // -----------get data for navbar name----------
     app.get("/users/:uid", async (req, res) => {
       const uid = req.params.uid;
-      const user = await usersCollection.findOne({ uid }); // assuming 'uid' is stored in DB
+      const user = await usersCollection.findOne({ uid });  
+      res.json(user)
       res.send(user);
     });
     // ------Get data from user for 6 top trading tips show in home page----
@@ -113,10 +114,10 @@ async function run() {
       const result = await gardenCollection.findOne(query);
       res.send(result);
     });
-    app.put("/gardens/:id", async (req, res) => {
+    app.put("/gardens/info/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
-      const options = { upsert: true };
+       
       const updatedTip = req.body;
       const updatedDoc = {
         $set: updatedTip,
@@ -124,7 +125,6 @@ async function run() {
       const result = await gardenCollection.updateOne(
         filter,
         updatedDoc,
-        options
       );
       res.send(result);
     });
