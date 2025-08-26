@@ -36,11 +36,11 @@ async function run() {
       res.send(result);
     });
     // -----------get data for navbar name----------
-    app.get("/users/:uid", async (req, res) => {
+    app.get("/users/uid/:uid", async (req, res) => {
       const uid = req.params.uid;
-      const user = await usersCollection.findOne({ uid });  
-      res.json(user)
-      res.send(user);
+      const user = await usersCollection.findOne({ uid });
+      res.json(user);
+      // res.send(user);
     });
     // ------Get data from user for 6 top trading tips show in home page----
     app.get("/gardens/description", async (req, res) => {
@@ -99,6 +99,7 @@ async function run() {
       res.send(result);
     });
 
+  
     // ----------------get information for Profile-------------
 
     // Get user by email
@@ -108,7 +109,7 @@ async function run() {
       res.send(result);
     });
     // ------------Updated share garden info form----------------
-    app.get("/gardens/:id", async (req, res) => {
+    app.get("/gardens/info/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await gardenCollection.findOne(query);
@@ -117,15 +118,12 @@ async function run() {
     app.put("/gardens/info/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
-       
+
       const updatedTip = req.body;
       const updatedDoc = {
         $set: updatedTip,
       };
-      const result = await gardenCollection.updateOne(
-        filter,
-        updatedDoc,
-      );
+      const result = await gardenCollection.updateOne(filter, updatedDoc);
       res.send(result);
     });
 
